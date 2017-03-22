@@ -1,0 +1,10 @@
+Package: ccex
+Type: Package
+Title: REST Client for the C-Cex Cryptocurrency Exchange
+Version: 0.1
+Date: 2017-03-21
+Author: Michael Kane
+Maintainer: Michael Kane <kaneplusplus@gmail.com>
+Description: More about what it does (maybe more than one line)
+License: LGPL-2
+RoxygenNote: 5.0.1
