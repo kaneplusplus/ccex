@@ -7,10 +7,11 @@
 pairs()
 }
 \value{
-A named list with the following structure:
+A named list with the following elements:
 \itemize{
- \item{success: }{was the request successful?}
- \item{message: }{if the request was not successful, what was the error?}
+ \item{success: }{a boolean indicating if the the request successful?}
+ \item{message: }{a string describing the error if the request was not 
+                  successful, othewise and empty string."}
  \item{result:  }{a character vector of the available markets.}
 }
 }
@@ -29,7 +30,10 @@ As an example, if you want to buy U.S. dollars with bitcoins you would
 create a "buy" order for the market denoted "usd-btc".
 }
 \examples{
+\dontrun{
 markets = pairs()$result
+print(markets)
+}
 }
 \references{
 \url{https://c-cex.com/t/prices.json}

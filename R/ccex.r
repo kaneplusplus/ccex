@@ -87,6 +87,13 @@ coinnames = function() {
     result=data.frame(list(ticker=names(resp), name=as.vector(resp))))
 }
 
+#' @examples
+#' \dontrun{
+#' btc_vol = volume("btc")$result
+#' head(btc_vol)
+#' }
+#' @importFrom httr GET content
+#' @export
 volume = function(ticker) {
   req = gsub("TICKER", ticker, "https://c-cex.com/t/volume_TICKER.json")
   resp = content(GET(req))
@@ -95,21 +102,44 @@ volume = function(ticker) {
   list(success=TRUE, message="", result=ti)
 }
 
+#' @examples
+#' \dontrun{
+#' markets = getmarkets()$result
+#' head(markets)
+#' }
+#' @importFrom httr GET content
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getmarkets = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarkets"), 
     type="application/json")
-  list(success=TRUE, message="", 
-    result=Reduce(rbind, Map(as.data.frame, resp$result)))
+  result = Reduce(rbind, Map(as.data.frame, resp$result))
+  sc_names = str_replace_all(names(result), "[A-Z]", 
+    function(x) paste0("_", tolower(x)))
+  names(result) = str_sub(sc_names, 2)
+  list(success=TRUE, message="", result=result)
 }
 
+#' @examples
+#' \dontrun{
+#' ob = getorderbook()$result
+#' head(ob$buy)
+#' head(ob$sell)
+#' }
+#' @importFrom httr GET content
+#' @export
 getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
   req="https://c-cex.com/t/api_pub.html?a=getorderbook&market=MARKET&type=TYPE&depth=DEPTH"
   req = gsub("DEPTH", depth, gsub("TYPE", type[1], gsub("MARKET", market, req)))
   resp = content(GET(req), type="application/json")
-  if (any(c("both", "buy") %in% names(resp$result)))
+  if (any(c("both", "buy") %in% names(resp$result))) {
     buy = Reduce(rbind, Map(as.data.frame, resp$result$buy))
-  if (any(c("both", "sell") %in% names(resp$result)))
+    names(buy) = tolower(names(buy))
+  }
+  if (any(c("both", "sell") %in% names(resp$result))) {
     sell= Reduce(rbind, Map(as.data.frame, resp$result$sell))
+    names(sell) = tolower(names(sell))
+  }
   if (any(c("both", "buy") %in% names(resp$result)))
     resp$result$buy = buy
   if (any(c("both", "sell") %in% names(resp$result)))
@@ -117,6 +147,14 @@ getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' ms = getmarketsummaries()$result
+#' head(ms)
+#' }
+#' @importFrom httr GET content
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getmarketsummaries = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarketsummaries"),
     type="application/json")
@@ -127,17 +165,38 @@ getmarketsummaries = function() {
         result[[i]][[j]] = NA
   }
   resp$result = Reduce(rbind, Map(as.data.frame, result))
+  sc_names = str_replace_all(names(resp$result), "[A-Z]", 
+    function(x) paste0("_", tolower(x)))
+  names(resp$result) = str_sub(sc_names, 2)
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' mh = getmarkethistory("usd-btc")$result
+#' head(ms)
+#' }
+#' @importFrom httr GET content
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getmarkethistory = function(market, count=50) {
   req="https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=MARKET&count=COUNT"
   req = gsub("MARKET", market, gsub("COUNT", count, req))
   resp = content(GET(req), type="application/json")
   resp$result = Reduce(rbind, Map(as.data.frame, resp$result))
+  sc_names = str_replace_all(names(resp$result), "[A-Z]", 
+    function(x) paste0("_", tolower(x)))
+  names(resp$result) = str_sub(sc_names, 2)
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' mh = getbalancedistribution("grc")$result
+#' head(ms)
+#' }
+#' @importFrom httr GET content
+#' @export
 getbalancedistribution = function(currency="grc") {
   req = "https://c-cex.com/t/api_pub.html?a=getbalancedistribution&currencyname=CURRENCY"
   req = gsub("CURRENCY", currency, req)
@@ -147,6 +206,8 @@ getbalancedistribution = function(currency="grc") {
   resp
 }
 
+#' @importFrom httr GET content
+#' @importFrom openssl sha512
 priv_req = function(req) {
   str_time = as.character(as.integer(Sys.time()))
   req = paste0(req, "&nonce=", str_time)
@@ -154,15 +215,27 @@ priv_req = function(req) {
   content(GET(req, add_headers(apisign=sig)), type="application/json")
 }
 
+#' @examples
+#' \dontrun{
+#' # Buy one bitcoin for 1169 dollars.
+#' order = buylimit("btc-usd", 1, 1169)
+#' }
+#' @export
 buylimit = function(market, quantity, rate) {
   req = "https://c-cex.com/t/api.html?a=buylimit&apikey=APIKEY&market=MARKET&quantity=QUANTITY&rate=RATE"
   req = gsub("APIKEY", options()$ccex_api_key,
         gsub("MARKET", market,
         gsub("QUANTITY", quantity,
         gsub("RATE", rate, req))))
-  ret = priv_req(req)
+  priv_req(req)
 }
 
+#' @examples
+#' \dontrun{
+#' # Sell one bitcoin for 1169 dollars.
+#' order = selllimit("btc-usd", 1, 1169)
+#' }
+#' @export
 selllimit = function(market, quantity, rate) {
   req = "https://c-cex.com/t/api.html?a=selllimit&apikey=APIKEY&market=MARKET&quantity=QUANTITY&rate=RATE"
   req = gsub("APIKEY", options()$ccex_api_key,
@@ -172,6 +245,11 @@ selllimit = function(market, quantity, rate) {
   priv_req(req)
 }
 
+#' @examples
+#' \dontrun{
+#' cancel(uuid) 
+#' }
+#' @export
 cancel = function(uuid) {
   req = "https://c-cex.com/t/api.html?a=cancel&apikey=APIKEY&uuid=UUID"
   req = gsub("UUID", uuid, gsub("APIKEY", options()$ccex_api_key, req))
@@ -179,6 +257,11 @@ cancel = function(uuid) {
   ret
 }
 
+#' @examples
+#' \dontrun{
+#' getbalance("btc") 
+#' }
+#' @export
 getbalance = function(currency="btc") {
   req = "https://c-cex.com/t/api.html?a=getbalance&apikey=APIKEY&currency=CURRENCY"
   req = gsub("APIKEY", options()$ccex_api_key, gsub("CURRENCY", currency, req))
@@ -186,17 +269,32 @@ getbalance = function(currency="btc") {
   if (length(resp$result) > 0) {
     resp$result = as.data.frame(resp$result)
   }
+  names(resp$result) = tolower(names(resp$result))
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' balances = getbalances()$result
+#' }
+#' @export
 getbalances = function() {
   req = "https://c-cex.com/t/api.html?a=getbalances&apikey=APIKEY"
   req = gsub("APIKEY", options()$ccex_api_key, req)
   resp = priv_req(req)
-  if (resp$success) resp$result=Reduce(rbind, Map(as.data.frame, resp$result))
+  if (resp$success) {
+    resp$result=Reduce(rbind, Map(as.data.frame, resp$result))
+    names(resp$result) = tolower(names(resp$result))
+  }
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' getorder(uuid)
+#' }
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getorder = function(uuid) {
   req = "https://c-cex.com/t/api.html?a=getorder&apikey=APIKEY&uuid=UUID"
   req = gsub("APIKEY", options()$ccex_api_key, 
@@ -210,11 +308,20 @@ getorder = function(uuid) {
       }
     }
     ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    sc_names = str_replace_all(names(ret), "[A-Z]", 
+      function(x) paste0("_", tolower(x)))
+    names(ret) = str_sub(sc_names, 2)
   }
   resp$result = ret
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' getopenorders("btc-usd")
+#' }
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getopenorders = function(market=NULL) {
   req = "https://c-cex.com/t/api.html?a=getopenorders"
   if (!is.null(market)) req = paste0(req, "&market=", market)
@@ -228,10 +335,19 @@ getopenorders = function(market=NULL) {
       }
     }
     ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    sc_names = str_replace_all(names(ret), "[A-Z]", 
+      function(x) paste0("_", tolower(x)))
+    names(ret) = str_sub(sc_names, 2)
   }
-  ret
+  resp
 }
 
+#' @examples
+#' \dontrun{
+#' getorderhistory()
+#' }
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 getorderhistory = function(market=NULL, count=NULL) {
   req = "https://c-cex.com/t/api.html?a=getorderhistory"
   if (!is.null(market)) req = paste0(req, "&market=", market)
@@ -246,20 +362,32 @@ getorderhistory = function(market=NULL, count=NULL) {
       }
     }
     ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    sc_names = str_replace_all(names(ret), "[A-Z]", 
+      function(x) paste0("_", tolower(x)))
+    names(ret) = str_sub(sc_names, 2)
   }
   resp$result = ret
   resp
 }
 
+#' @examples
+#' \dontrun{
+#' mytrades("btc-usd")
+#' }
+#' @importFrom stringr str_replace_all str_sub
+#' @export
 mytrades = function(market, limit=3) {
   req = "https://c-cex.com/t/api.html?a=mytrades&apikey=APIKEY&marketid=MARKET&limit=LIMIT"
   req = gsub("MARKET", market,
         gsub("LIMIT", limit, req))
   resp = priv_req(req)
   ret = list()
-  if (length(resp$result) > 0) 
+  if (length(resp$result) > 0) {
     ret = Reduce(rbind, Map(as.data.frame, resp$result))
-  ret
+    sc_names = str_replace_all(names(ret), "[A-Z]", 
+      function(x) paste0("_", tolower(x)))
+    names(ret) = str_sub(sc_names, 2)
+  }
   resp$result = ret
   resp
 }
