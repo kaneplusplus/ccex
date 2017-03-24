@@ -7,8 +7,8 @@
 getopenorders(market = NULL)
 }
 \arguments{
-\item{market}{the market on which you would like to see all open orders.
-This parameter is optional and if not specified, then all open orders
+\item{market}{(optional) the market on which you would like to see all 
+open orders. If not specified, then all open orders
 for all markets are returned.}
 }
 \value{
@@ -38,5 +38,6 @@ getopenorders("btc-usd")
 \url{https://c-cex.com/?id=api#getorder}
 }
 \seealso{
-\code{\link{ccex_authentication}} \code{\link{getorder}}.
+\code{\link{ccex_authenticate}} \code{\link{getorder}}
+\code{\link{mytrades}}
 }

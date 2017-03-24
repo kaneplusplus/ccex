@@ -294,7 +294,7 @@ getbalancedistribution = function(currency="grc") {
 priv_req = function(req) {
   str_time = as.character(as.integer(Sys.time()))
   req = paste0(req, "&nonce=", str_time)
-  sig = sha512(req, options()$ccex_secret_key)
+  sig = sha512(req, Sys.getenv("CCEX_SECRET_KEY"))
   content(GET(req, add_headers(apisign=sig)), type="application/json")
 }
 
@@ -331,7 +331,7 @@ priv_req = function(req) {
 #' @export
 buylimit = function(market, quantity, rate) {
   req = "https://c-cex.com/t/api.html?a=buylimit&apikey=APIKEY&market=MARKET&quantity=QUANTITY&rate=RATE"
-  req = gsub("APIKEY", options()$ccex_api_key,
+  req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"),
         gsub("MARKET", market,
         gsub("QUANTITY", quantity,
         gsub("RATE", rate, req))))
@@ -372,7 +372,7 @@ buylimit = function(market, quantity, rate) {
 #' @export
 selllimit = function(market, quantity, rate) {
   req = "https://c-cex.com/t/api.html?a=selllimit&apikey=APIKEY&market=MARKET&quantity=QUANTITY&rate=RATE"
-  req = gsub("APIKEY", options()$ccex_api_key,
+  req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"),
         gsub("MARKET", market,
         gsub("QUANTITY", quantity,
         gsub("RATE", rate, req))))
@@ -380,8 +380,18 @@ selllimit = function(market, quantity, rate) {
 }
 
 #' @title Authenticate Your Account on the C-Cex Exchange
+#' @description The \code{ccex_authenicate} function sets the 
+#' CCEX_API_KEY and CCEX_SECRET_KEY environment variables in your current
+#' session to access your account information on the C-Cex crypto-currency
+#' exchange (\url{\https://c-cex.com}).
+#' @references \url{https://c-cex.com/?id=api#authentication}
+#' @param api_key the api key provided by the exchange
+#' @param secret_key the secret key provided by the exchange
 #' @export
-ccex_authenticate = function() {
+ccex_authenticate = function(api_key, secret_key) {
+  Sys.setenv("CCEX_API_KEY"=api_key)
+  Sys.setenv("CCEX_SECRET_KEY"=secret_key)
+  invisible(TRUE)
 }
 
 #' @title Cancel an Open Order
@@ -409,7 +419,7 @@ ccex_authenticate = function() {
 #' @export
 cancel = function(uuid) {
   req = "https://c-cex.com/t/api.html?a=cancel&apikey=APIKEY&uuid=UUID"
-  req = gsub("UUID", uuid, gsub("APIKEY", options()$ccex_api_key, req))
+  req = gsub("UUID", uuid, gsub("APIKEY", Sys.getenv("CCEX_API_KEY"), req))
   ret = priv_req(req)
   ret
 }
@@ -439,7 +449,8 @@ cancel = function(uuid) {
 #' @export
 getbalance = function(currency="btc") {
   req = "https://c-cex.com/t/api.html?a=getbalance&apikey=APIKEY&currency=CURRENCY"
-  req = gsub("APIKEY", options()$ccex_api_key, gsub("CURRENCY", currency, req))
+  req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"),
+    gsub("CURRENCY", currency, req))
   resp = priv_req(req)
   if (length(resp$result) > 0) {
     resp$result = as.data.frame(resp$result)
@@ -472,7 +483,7 @@ getbalance = function(currency="btc") {
 #' @export
 getbalances = function() {
   req = "https://c-cex.com/t/api.html?a=getbalances&apikey=APIKEY"
-  req = gsub("APIKEY", options()$ccex_api_key, req)
+  req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"), req)
   resp = priv_req(req)
   if (resp$success) {
     resp$result=Reduce(rbind, Map(as.data.frame, resp$result))
@@ -507,7 +518,7 @@ getbalances = function() {
 #' @export
 getorder = function(uuid) {
   req = "https://c-cex.com/t/api.html?a=getorder&apikey=APIKEY&uuid=UUID"
-  req = gsub("APIKEY", options()$ccex_api_key, 
+  req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"),
         gsub("UUID", uuid, req))
   resp = priv_req(req)
   ret = NULL

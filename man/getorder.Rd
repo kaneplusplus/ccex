@@ -36,5 +36,5 @@ getorder(uuid)
 \url{https://c-cex.com/?id=api#getorder}
 }
 \seealso{
-\code{\link{ccex_authentication}} \code{\link{getopenorders}}.
+\code{\link{ccex_authenticate}} \code{\link{getopenorders}}.
 }
