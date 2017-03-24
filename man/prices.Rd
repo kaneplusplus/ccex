@@ -9,9 +9,9 @@ prices()
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the the request successful?}
+ \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, othewise and empty string."}
+                  successful, otherwise and empty string."}
  \item{result: }{a \code{data.frame} with sell and buy data for each market.}
 }
 }

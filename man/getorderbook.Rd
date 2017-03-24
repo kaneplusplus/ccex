@@ -17,9 +17,9 @@ maximum are 50).}
 \value{
 A named list with the following elements:
 \itemize{
- \item{success: }{a boolean indicating if the the request successful?}
+ \item{success: }{a boolean indicating if the request successful?}
  \item{message: }{a string describing the error if the request was not 
-                  successful, othewise and empty string."}
+                  successful, otherwise and empty string."}
  \item{result:  }{A named list with the buy and sell orders (depending
    on the specified \code{type} parameter. If \code{type} is "buy" or
    "both" then the list will contain a element named "buy" with

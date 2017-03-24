@@ -301,15 +301,15 @@ priv_req = function(req) {
 #' @title Place a Buy Limit Order
 #' @description The \code{buylimit} function places a buy order onto the 
 #' C-Cex crypto-currency exchange \url{https://c-cex.com}. This function
-#' only works if you have set up authentication with the 
-#' \code{\link{ccex_authenticate}} function. 
+#' only works after you have set up authentication.
 #' @seealso \code{link{ccex_authenticate}} \code{\link{selllimit}}
-#' \code{\link{getorder} \code{\link{getopenorders}} 
+#' \code{\link{getorder}} \code{\link{getopenorders}} 
 #' \code{\link{getorderhistory}}
 #' @references \url{https://c-cex.com/?id=api#buylimit}
 #' @param market the market to place the buy limit order on.
-#' @quantity the quantity of the transaction currency to buy.
-#' @rate the price you are willing to pay per unit of the transaction currency.
+#' @param quantity the quantity of the transaction currency to buy.
+#' @param rate the price you are willing to pay per unit of the 
+#' transaction currency.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -321,6 +321,7 @@ priv_req = function(req) {
 #'    \code{link{getopenorders}} function. When the order is fulfilled it
 #'    appears in the order history \code{data.frame} returned by the
 #'    \code{link{getorderhistory}} function.
+#'  }
 #' }
 #' @examples
 #' \dontrun{
@@ -337,19 +338,19 @@ buylimit = function(market, quantity, rate) {
   priv_req(req)
 }
 
-
 #' @title Place a Sell Limit Order
 #' @description The \code{selllimit} function places a buy order onto the 
 #' C-Cex crypto-currency exchange \url{https://c-cex.com}. This function
-#' only works if you have set up authentication with the 
-#' \code{\link{ccex_authenticate}} function. 
+#' only works if you have set up authentication. 
 #' @seealso \code{link{ccex_authenticate}} \code{\link{buylimit}}
-#' \code{\link{getorder} \code{\link{getopenorders}} 
+#' \code{\link{getorder}} \code{\link{getopenorders}} 
 #' \code{\link{getorderhistory}}
 #' @references \url{https://c-cex.com/?id=api#buylimit}
 #' @param market the market to place the buy limit order on.
-#' @quantity the quantity of the reference currency to sell. 
-#' @rate the price you would like to get per unit of the transaction currency.
+#' @param quantity the quantity of the reference currency to sell. 
+#' @param rate the price you would like to get per unit of the 
+#' transaction 
+#' currency.
 #' @return A named list with the following elements:
 #' \itemize{
 #'  \item{success: }{a boolean indicating if the request successful?}
@@ -361,6 +362,7 @@ buylimit = function(market, quantity, rate) {
 #'    \code{link{getopenorders}} function. When the order is fulfilled it
 #'    appears in the order history \code{data.frame} returned by the
 #'    \code{link{getorderhistory}} function.
+#'  }
 #' }
 #' @examples
 #' \dontrun{
@@ -377,12 +379,27 @@ selllimit = function(market, quantity, rate) {
   priv_req(req)
 }
 
+#' @title Authenticate Your Account on the C-Cex Exchange
+#' @export
+ccex_authenticate = function() {
+}
+
 #' @title Cancel an Open Order
 #' @description The \code{cancel} function cancels an open order on the
 #' C-Cex crypto-currency exchange \url{https://c-cex.com}. This function
-#' is called after authentication and after an order is placed using either 
+#' is called after providing information to authenticate your account and 
+#' after an order is placed using either 
 #' the \code{link{buylimit}} or \code{link{selllimit}} functions.
-#' @seealso \code{ccex_authenticate} \code{\link{getorder}
+#' @seealso \code{\link{ccex_authenticate}} \code{\link{getorder}}
+#' @references \url{https://c-cex.com/?id=api#cancel}
+#' @param uuid the uuid of the order you would like to cancel.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{always NULL}
+#' }
 #' \code{\link{getopenorders}} \code{\link{getorderhistory}} 
 #' \code{\link{buylimit}} \code{\link{selllimit}}
 #' @examples
@@ -397,6 +414,24 @@ cancel = function(uuid) {
   ret
 }
 
+#' Get the Balance a Specified Currency
+#' @description The \code{getbalance} function retrieves the account balance
+#' for a specified currency on the C-Cex crypto-currency 
+#' exchange \url{https://c-cex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}}
+#' @references \url{https://c-cex.com/?id=api#getbalance}
+#' @param currency the currency to get your account balance for. 
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} with the currency, balance, 
+#'    available funds, the amount of any pending transactions, and a
+#'    crypographic address that can be used to receive more funding.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' getbalance("btc") 
@@ -413,6 +448,23 @@ getbalance = function(currency="btc") {
   resp
 }
 
+#' Get the Balances for All Currencies
+#' @description The \code{getbalances} function retrieves the account balance
+#' for all currencies on the C-Cex crypto-currency 
+#' exchange \url{https://c-cex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}}
+#' @references \url{https://c-cex.com/?id=api#getbalances}
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} with the currencies, balances, 
+#'    available funds, the amount of any pending transactions, and 
+#'    crypographic addresses that can be used to receive funding.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' balances = getbalances()$result
@@ -429,6 +481,24 @@ getbalances = function() {
   resp
 }
 
+#' @title Get Order Data
+#' @description The \code{getorder} function retrieves open order data 
+#' on the C-Cex crypto-currency 
+#' exchange \url{https://c-cex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}} \code{\link{getopenorders}}.
+#' @references \url{https://c-cex.com/?id=api#getorder}
+#' @param uuid the uuid of the order.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing information about the 
+#'    open order including (but not limited to) the market, quantity remaining
+#'    in the order, the type of order, and when the order was opened.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' getorder(uuid)
@@ -456,6 +526,27 @@ getorder = function(uuid) {
   resp
 }
 
+#' @title Get Data for All Open Orders
+#' @description The \code{getopenorders} function retrieves all open orders
+#' on the C-Cex crypto-currency 
+#' exchange \url{https://c-cex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}} \code{\link{getorder}}
+#' \code{\link{mytrades}}
+#' @references \url{https://c-cex.com/?id=api#getorder}
+#' @param market (optional) the market on which you would like to see all 
+#' open orders. If not specified, then all open orders
+#' for all markets are returned.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing information about the 
+#'    open orders including (but not limited to) the market, quantity remaining
+#'    in the order, the type of order, and when the order was opened.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' getopenorders("btc-usd")
@@ -482,6 +573,28 @@ getopenorders = function(market=NULL) {
   resp
 }
 
+#' @title Get Order History
+#' @description The \code{getorderhistory} function retrieves order history
+#' data on the C-Cex crypto-currency exchange \url{https://c-cex.com}. This 
+#' function can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}}
+#' @references \url{https://c-cex.com/?id=api#getorderhistory}
+#' @param market (optional) the market on which you would like to see all 
+#' open orders. If not specified, then completed orders for all markets are 
+#' returned.
+#' @param count (optional) the number of records to return.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing data about 
+#'    previously completed orders including the order uuid, the exchange
+#'    the time of the order, the order type, the limit, the quantity, the
+#'    quantity remaining, the commission, the price, the price per unit,
+#'    and whether or not it was a conditional trade.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' getorderhistory()
@@ -510,6 +623,24 @@ getorderhistory = function(market=NULL, count=NULL) {
   resp
 }
 
+#' @title Get a Detailed Trading History for a Market
+#' @description The \code{mytrades} function retrieves a detailed
+#' trading history for a specified market on the C-Cex crypto-currency 
+#' exchange \url{https://c-cex.com}. This function
+#' can be used after you provide information for authentication.
+#' @seealso \code{\link{ccex_authenticate}} \code{\link{getorderhistory}}
+#' @param market the market on which you would like to see the history data.
+#' @param limit (optional) the number of records to return.
+#' @return A named list with the following elements:
+#' \itemize{
+#'  \item{success: }{a boolean indicating if the request successful?}
+#'  \item{message: }{a string describing the error if the request was not 
+#'                   successful, otherwise and empty string."}
+#'  \item{result:  }{a \code{data.frame} providing detailed information about
+#'    trades on the market including (but not limited to) the order type,
+#'    the time of the trade, the trade price, the quantity, and the uuid.
+#'  }
+#' }
 #' @examples
 #' \dontrun{
 #' mytrades("btc-usd")

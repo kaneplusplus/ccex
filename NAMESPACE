@@ -2,6 +2,7 @@
 
 export(buylimit)
 export(cancel)
+export(ccex_authenticate)
 export(coinnames)
 export(getbalance)
 export(getbalancedistribution)
