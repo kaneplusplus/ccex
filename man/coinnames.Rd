@@ -7,7 +7,7 @@
 coinnames()
 }
 \value{
-A named list with the with the following elements:
+A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the the request successful?}
  \item{message: }{a string describing the error if the request was not 
@@ -28,6 +28,5 @@ head(cns)
 }
 }
 \references{
-\url{https://c-cex.com/t/coinnames.json}
+\url{https://c-cex.com/?id=api#coinnames.json}
 }
-

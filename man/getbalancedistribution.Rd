@@ -2,8 +2,14 @@
 % Please edit documentation in R/ccex.r
 \name{getbalancedistribution}
 \alias{getbalancedistribution}
+\title{Get the Exchange's Wallet Balance Distribution}
 \usage{
 getbalancedistribution(currency = "grc")
+}
+\description{
+The \code{getbalancedistribution} function retrieves the
+C-Cex crypto-currency exchange's wallet balance distribution for a specified
+currency.
 }
 \examples{
 \dontrun{
@@ -11,4 +17,6 @@ mh = getbalancedistribution("grc")$result
 head(ms)
 }
 }
-
+\references{
+\url{https://c-cex.com/?id=api#getbalancedistribution}
+}

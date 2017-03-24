@@ -2,14 +2,42 @@
 % Please edit documentation in R/ccex.r
 \name{getorderbook}
 \alias{getorderbook}
+\title{Get the Order Book for a Market}
 \usage{
 getorderbook(market, type = c("both", "buy", "sell"), depth = 50)
 }
+\arguments{
+\item{market}{the market from which the order book will be retrieved.}
+
+\item{type}{type of orders to retrieve (default is "both")}
+
+\item{depth}{how deep should the returned order book be (default and 
+maximum are 50).}
+}
+\value{
+A named list with the following elements:
+\itemize{
+ \item{success: }{a boolean indicating if the the request successful?}
+ \item{message: }{a string describing the error if the request was not 
+                  successful, othewise and empty string."}
+ \item{result:  }{A named list with the buy and sell orders (depending
+   on the specified \code{type} parameter. If \code{type} is "buy" or
+   "both" then the list will contain a element named "buy" with
+   a \code{data.frame} of the buy orders.}
+}
+}
+\description{
+The \code{getorderbook} function returns the order book 
+for a specified market on the C-Cex crypto-currency exchange 
+\url{https://c-cex.com}.
+}
 \examples{
 \dontrun{
-ob = getorderbook()$result
+ob = getorderbook("usd-btc")$result
 head(ob$buy)
 head(ob$sell)
 }
 }
-
+\references{
+\url{https://c-cex.com/?id=api#getorderbook}
+}

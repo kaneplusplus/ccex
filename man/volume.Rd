@@ -2,8 +2,27 @@
 % Please edit documentation in R/ccex.r
 \name{volume}
 \alias{volume}
+\title{Retrieve the Volume of Trades for a Currency}
 \usage{
 volume(ticker)
+}
+\arguments{
+\item{ticker}{the currency ticker to retrieve volume for.}
+}
+\value{
+A named list with the following elements:
+\itemize{
+ \item{success: }{a boolean indicating if the the request successful?}
+ \item{message: }{a string describing the error if the request was not 
+                  successful, othewise and empty string."}
+ \item{result: }{a \code{data.frame} with the ticker the specified 
+   currency trades with, the last trade price, and the volume.}
+}
+}
+\description{
+The \code{volume} functions returns the online volume reported
+for last 24 hours for all markets on the C-Cex crypto-currency exchange
+(\url{https://c-cex.com}) in which the specified currency is traded.
 }
 \examples{
 \dontrun{
@@ -11,4 +30,6 @@ btc_vol = volume("btc")$result
 head(btc_vol)
 }
 }
-
+\references{
+\url{https://c-cex.com/?id=api#volume_[COIN\%20MARKET].json}
+}

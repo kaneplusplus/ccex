@@ -2,8 +2,15 @@
 % Please edit documentation in R/ccex.r
 \name{buylimit}
 \alias{buylimit}
+\title{Place a Buy Limit Order}
 \usage{
 buylimit(market, quantity, rate)
+}
+\description{
+The \code{buylimit} function places a buy order onto the 
+C-Cex crypto-currency exchange \url{https://c-cex.com}. This function
+only works if you have set up authentication with the 
+\code{\link{ccex_authenticate}} function.
 }
 \examples{
 \dontrun{
@@ -11,4 +18,6 @@ buylimit(market, quantity, rate)
 order = buylimit("btc-usd", 1, 1169)
 }
 }
-
+\seealso{
+\code{link{ccex_authenticate}}
+}

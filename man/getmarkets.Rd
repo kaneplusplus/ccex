@@ -2,8 +2,26 @@
 % Please edit documentation in R/ccex.r
 \name{getmarkets}
 \alias{getmarkets}
+\title{Title All Available Trading Markets and Other Meta Data}
 \usage{
 getmarkets()
+}
+\value{
+A named list with the following elements:
+\itemize{
+ \item{success: }{a boolean indicating if the the request successful?}
+ \item{message: }{a string describing the error if the request was not 
+                  successful, othewise and empty string."}
+ \item{result:  }{A \code{data.frame} with the currencies, market names,
+   whether or not the market is active, and when the market was created}
+}
+}
+\description{
+The \code{getmarkets} function returns all of the available
+markets currently available currently available on the 
+C-Cex crypto-currency exchange (\url{https://c-cex.com}) along with
+other information including, among other information, when the exchange
+was created and the minimum order size.
 }
 \examples{
 \dontrun{
@@ -11,4 +29,6 @@ markets = getmarkets()$result
 head(markets)
 }
 }
-
+\references{
+\url{https://c-cex.com/?id=api#getmarkets}
+}

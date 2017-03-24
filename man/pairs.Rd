@@ -36,6 +36,5 @@ print(markets)
 }
 }
 \references{
-\url{https://c-cex.com/t/prices.json}
+\url{https://c-cex.com/?id=api#prices.json}
 }
-

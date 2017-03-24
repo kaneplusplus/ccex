@@ -7,7 +7,7 @@
 prices()
 }
 \value{
-A named list with the with the following elements:
+A named list with the following elements:
 \itemize{
  \item{success: }{a boolean indicating if the the request successful?}
  \item{message: }{a string describing the error if the request was not 
@@ -27,6 +27,5 @@ head(all_prices)
 }
 }
 \references{
-\url{https://c-cex.com/t/prices.json}
+\url{https://c-cex.com/?id=api#prices.json}
 }
-
