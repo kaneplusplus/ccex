@@ -5,7 +5,7 @@ output:
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-ccex: An R client for the [C-Cex Crypto Currency Exchange](https://c-cex.com)
+ccex: An R client for the [C-Cex Crypto-currency Exchange](https://c-cex.com)
 =====================================================
 
 Disclaimer
