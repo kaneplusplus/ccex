@@ -1,5 +1,5 @@
 ---
-title: 'Fidgit: An ungodly union of GitHub and figshare'
+title: 'ccex: An R client for the C-Cex Crypto Currency Exchange'
 tags:
   - finance
   - crypto-currency
@@ -17,14 +17,24 @@ bibliography: paper.bib
 
 # Summary
 
-This is a proof of concept integration between a GitHub [@GitHub] repo and figshare
-[@figshare] in an effort to get a DOI for a GitHub repository. When a repository is
-tagged for release on GitHub, Fidgit [@Fidgit] will import the release into figshare
-thus giving the code bundle a DOI. In a somewhat meta fashion, Fidgit is publishing
-itself to figshare with DOI 'http://dx.doi.org/10.6084/m9.figshare.828487'
-[@figshare_archive].
+Package ```ccex``` [@ccex] is an R [@R] client for the REST server used by the
+C-Cex crypto-currency exchange [@ccex_site]. The package provides 
+functions for all endpoints supported by the exchange and includes the
+ability to retrieve price, volume, and orderbook information as well as
+the ability to trade crypto-currencies.
 
--![Fidgit deposited in figshare.](figshare_article.png)
+Calls to the exchange are categorized as either public, which includes
+requests for price, volume, and order book information, and private,
+which includes all requests requiring an account including placing buy
+or sell orders. Public calls can be used directly by installing the
+package. Private calls require that you [create an
+account](https://c-cex.com/?id=reg) and create an API and secret key
+with appropriate permissions.
+
+Private calls retrieve the API and secret key using the CCEX\_API\_KEY
+and CCEX\_SECRET\_KEY environment variables. These may be set by the
+user before opening the R session or, they can be set using the
+'ccex\_authenticate' function.
 
 # References
   
