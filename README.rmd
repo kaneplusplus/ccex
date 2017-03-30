@@ -22,8 +22,8 @@ This software is Licenced under the LGPL version 2.
 Overview
 ===
 
-Package 'ccex' is an R implementation of the REST interface used by the C-Cex
-crypto-currency exchange \url{https://c-cex.com/}. It provides functions 
+Package 'ccex' is an R implementation of the REST interface used by the [C-Cex
+crypto-currency exchange](https://c-cex.com/). It provides functions 
 for endpoints supported by the exchange. This includes the ability 
 to retrieve price, volume, and orderbook information as well as the ability
 to trade crypto-currencies.
@@ -32,9 +32,9 @@ Calls to the exchange are categorized as either public, which includes
 requests for price, volume, and order book information, and private, which 
 includes all requests requiring an account including placing buy or sell 
 orders. Public calls can be used directly by installing the package. 
-Private calls require creating an account at 
-\url{https://c-cex.com/?id=reg} and creating an API and secret key with 
-appropriate permissions.
+Private calls require that you 
+[create an account](https://c-cex.com/?id=reg) and create an API and secret 
+key with appropriate permissions.
 
 Private calls retrieve the API and secret key using the CCEX_API_KEY and 
 CCEX_SECRET_KEY environment variables. These may be set by the user before 
