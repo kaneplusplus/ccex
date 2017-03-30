@@ -51,18 +51,6 @@ available from CRAN. A
 devtools::install_github("kaneplusplus/ccex")
 ```
 
-    ## Downloading GitHub repo kaneplusplus/ccex@master
-    ## from URL https://api.github.com/repos/kaneplusplus/ccex/zipball/master
-
-    ## Installing ccex
-
-    ## '/usr/local/Cellar/r/3.3.3_1/R.framework/Resources/bin/R' --no-site-file  \
-    ##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
-    ##   '/private/var/folders/w4/883ym75560l31lswx77lpgy40000gn/T/RtmpGet5n2/devtools29dd48c29344/kaneplusplus-ccex-c1ffbae'  \
-    ##   --library='/usr/local/lib/R/3.3/site-library' --install-tests
-
-    ## 
-
 Using the Package
 -----------------
 
@@ -88,4 +76,4 @@ ggplot(btc_usd, aes(x=time_stamp, y=price, group=order_type,
   ylab("Price") + scale_colour_discrete(name="Order Type")
 ```
 
-[](inst/doc/README_files/figure-markdown_github-hard_line_breaks/unnamed-chunk-2-1.png)
+![](inst/doc/README_files/figure-markdown_github-hard_line_breaks/unnamed-chunk-2-1.png)
