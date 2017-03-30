@@ -58,6 +58,10 @@
 #' }
 NULL
 
+as_data_frame = function(x) {
+  as.data.frame(x, stringsAsFactors=FALSE)
+}
+
 #' @title Available Trading Pairs
 #' @description The \code{pairs} function returns all currency-pairs 
 #' currently available on the C-Cex crypto-currency exchange
@@ -111,7 +115,7 @@ pairs = function() {
 prices = function() {
   resp = content(GET("https://c-cex.com/t/prices.json"), 
     type="application/json")
-  ret = Reduce(rbind, Map(as.data.frame, resp))
+  ret = Reduce(rbind, Map(as_data_frame, resp))
   ret$market = names(resp)
   list(success=TRUE, message="", result=ret)
 }
@@ -166,7 +170,7 @@ coinnames = function() {
 volume = function(ticker) {
   req = gsub("TICKER", ticker, "https://c-cex.com/t/volume_TICKER.json")
   resp = content(GET(req))
-  ti = Reduce(rbind, Map(as.data.frame, resp$ticker))
+  ti = Reduce(rbind, Map(as_data_frame, resp$ticker))
   ti$ticker = names(resp$ticker)
   list(success=TRUE, message="", result=ti)
 }
@@ -197,7 +201,7 @@ volume = function(ticker) {
 getmarkets = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarkets"), 
     type="application/json")
-  result = Reduce(rbind, Map(as.data.frame, resp$result))
+  result = Reduce(rbind, Map(as_data_frame, resp$result))
   sc_names = str_replace_all(names(result), "[A-Z]", 
     function(x) paste0("_", tolower(x)))
   names(result) = str_sub(sc_names, 2)
@@ -236,11 +240,11 @@ getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
   req = gsub("DEPTH", depth, gsub("TYPE", type[1], gsub("MARKET", market, req)))
   resp = content(GET(req), type="application/json")
   if (any(c("both", "buy") %in% names(resp$result))) {
-    buy = Reduce(rbind, Map(as.data.frame, resp$result$buy))
+    buy = Reduce(rbind, Map(as_data_frame, resp$result$buy))
     names(buy) = tolower(names(buy))
   }
   if (any(c("both", "sell") %in% names(resp$result))) {
-    sell= Reduce(rbind, Map(as.data.frame, resp$result$sell))
+    sell= Reduce(rbind, Map(as_data_frame, resp$result$sell))
     names(sell) = tolower(names(sell))
   }
   if (any(c("both", "buy") %in% names(resp$result)))
@@ -281,10 +285,11 @@ getmarketsummaries = function() {
       if (is.null(result[[i]][[j]]))
         result[[i]][[j]] = NA
   }
-  resp$result = Reduce(rbind, Map(as.data.frame, result))
+  resp$result = Reduce(rbind, Map(as_data_frame, result))
   sc_names = str_replace_all(names(resp$result), "[A-Z]", 
     function(x) paste0("_", tolower(x)))
   names(resp$result) = str_sub(sc_names, 2)
+  resp$time_stamp = strptime(resp$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   resp
 }
 
@@ -316,10 +321,11 @@ getmarkethistory = function(market, count=50) {
   req="https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=MARKET&count=COUNT"
   req = gsub("MARKET", market, gsub("COUNT", count, req))
   resp = content(GET(req), type="application/json")
-  resp$result = Reduce(rbind, Map(as.data.frame, resp$result))
+  resp$result = Reduce(rbind, Map(as_data_frame, resp$result))
   sc_names = str_replace_all(names(resp$result), "[A-Z]", 
     function(x) paste0("_", tolower(x)))
   names(resp$result) = str_sub(sc_names, 2)
+  resp$time_stamp = strptime(resp$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   resp
 }
 
@@ -341,7 +347,7 @@ getbalancedistribution = function(currency) {
   req = gsub("CURRENCY", currency, req)
   resp = content(GET(req), type="application/json")
   resp$result = as.vector(unlist(Reduce(c, 
-    Map(as.data.frame, resp$result$Distribution))))
+    Map(as_data_frame, resp$result$Distribution))))
   resp
 }
 
@@ -509,7 +515,7 @@ getbalance = function(currency="btc") {
     gsub("CURRENCY", currency, req))
   resp = priv_req(req)
   if (length(resp$result) > 0) {
-    resp$result = as.data.frame(resp$result)
+    resp$result = as_data_frame(resp$result)
   }
   names(resp$result) = tolower(names(resp$result))
   resp
@@ -542,7 +548,7 @@ getbalances = function() {
   req = gsub("APIKEY", Sys.getenv("CCEX_API_KEY"), req)
   resp = priv_req(req)
   if (resp$success) {
-    resp$result=Reduce(rbind, Map(as.data.frame, resp$result))
+    resp$result=Reduce(rbind, Map(as_data_frame, resp$result))
     names(resp$result) = tolower(names(resp$result))
   }
   resp
@@ -584,7 +590,7 @@ getorder = function(uuid) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
-    ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    ret = Reduce(rbind, Map(as_data_frame, resp$result))
     sc_names = str_replace_all(names(ret), "[A-Z]", 
       function(x) paste0("_", tolower(x)))
     names(ret) = str_sub(sc_names, 2)
@@ -632,7 +638,7 @@ getopenorders = function(market=NULL) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
-    ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    ret = Reduce(rbind, Map(as_data_frame, resp$result))
     sc_names = str_replace_all(names(ret), "[A-Z]", 
       function(x) paste0("_", tolower(x)))
     names(ret) = str_sub(sc_names, 2)
@@ -681,10 +687,11 @@ getorderhistory = function(market=NULL, count=NULL) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
-    ret = Reduce(rbind, Map(as.data.frame, resp$result))
+    ret = Reduce(rbind, Map(as_data_frame, resp$result))
     sc_names = str_replace_all(names(ret), "[A-Z]", 
       function(x) paste0("_", tolower(x)))
     names(ret) = str_sub(sc_names, 2)
+    ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   }
   resp$result = ret
   resp
@@ -717,14 +724,13 @@ getorderhistory = function(market=NULL, count=NULL) {
 mytrades = function(market, limit=3) {
   req = "https://c-cex.com/t/api.html?a=mytrades&apikey=APIKEY&marketid=MARKET&limit=LIMIT"
   req = gsub("MARKET", market,
-        gsub("LIMIT", limit, req))
+        gsub("LIMIT", limit, 
+        gsub("APIKEY", Sys.getenv("CCEX_API_KEY"), req)))
   resp = priv_req(req)
   ret = list()
-  if (length(resp$result) > 0) {
-    ret = Reduce(rbind, Map(as.data.frame, resp$result))
-    sc_names = str_replace_all(names(ret), "[A-Z]", 
-      function(x) paste0("_", tolower(x)))
-    names(ret) = str_sub(sc_names, 2)
+  if (length(resp$return) > 0) {
+    ret = Reduce(rbind, Map(as_data_frame, resp$return))
+    ret$datetime = strptime(ret$datetime, "%Y-%m-%d %H:%M:%S", tz="GMT")
   }
   resp$result = ret
   resp
