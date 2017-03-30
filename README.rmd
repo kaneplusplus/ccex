@@ -69,12 +69,12 @@ library(scales)
 library(ggplot2)
 
 # The price of doge coins in bitcoins.
-btc_usd = ccex::getmarkethistory(market='doge-btc', count=100)$result
+doge_btc = ccex::getmarkethistory(market='doge-btc', count=100)$result
 
 # ggplot2 handle POSIXct types only.
-btc_usd$time_stamp = as.POSIXct(btc_usd$time_stamp)
+doge_btc$time_stamp = as.POSIXct(doge_btc$time_stamp)
 
-ggplot(btc_usd, aes(x=time_stamp, y=price, group=order_type, 
+ggplot(doge_btc, aes(x=time_stamp, y=price, group=order_type, 
   color=order_type)) + geom_line() + 
   scale_x_datetime(breaks=date_breaks("hours"), 
     labels=date_format("%m-%d %H:%M")) + xlab("Date and Time") +
