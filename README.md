@@ -7,9 +7,9 @@ Disclaimer
 ==========
 
 This software is in no way affiliated, endorsed, or approved by the
-C-Cex crypto-currency exchange or any of its affiliates. It comes with
-absolutely no warranty and should not be used in actual trading unless
-the user can read and understand the source and know what you are doing.
+[C-Cex crypto-currency exchange](https://c-cex.com/) or any of its affiliates. 
+It comes with absolutely no warranty and should not be used in actual trading 
+unless the user can read and understand the source and know what you are doing.
 
 This software is Licenced under the LGPL version 2.
 
