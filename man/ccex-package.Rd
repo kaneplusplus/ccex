@@ -34,28 +34,28 @@ function.
 
 Public Function Calls
 \itemize{
-\item{coinnames:}{coin names for all currencies}
-\item{getballancedistribution:}{exchange's wallet balance distribution}
-\item{getmarkethistory:}{recent history for a market}
-\item{getmarkets:}{available markets and other meta-data}
-\item{getmarketsummaries:}{summary of active markets}
-\item{getorderbook:}{order book for a market}
-\item{pairs:}{available trading pairs}
-\item{prices:}{prices for all markets}
-\item{volume:}{volume of trades for a currency}
+\item{coinnames: }{coin names for all currencies}
+\item{getballancedistribution: }{exchange's wallet balance distribution}
+\item{getmarkethistory: }{recent history for a market}
+\item{getmarkets: }{available markets and other meta-data}
+\item{getmarketsummaries: }{summary of active markets}
+\item{getorderbook: }{order book for a market}
+\item{pairs: }{available trading pairs}
+\item{prices: }{prices for all markets}
+\item{volume: }{volume of trades for a currency}
 }
 Private Function Calls
 \itemize{
-\item{buylimit:}{place a buy limit order}
-\item{cancel:}{cancel an open order}
-\item{ccex_authenticate:}{provide user authentication data}
-\item{getbalance:}{account balance for a specified currency}
-\item{getblanances:}{account balances for currencies}
-\item{getopenorders:}{order data for all open orders}
-\item{getorderdata:}{order data for a specified order}
-\item{getorderhistory:}{recent order history for an account }
-\item{mytrades:}{detailed recent trading history for a market}
-\item{selllimit:}{place a sell limit order}
+\item{buylimit: }{place a buy limit order}
+\item{cancel: }{cancel an open order}
+\item{ccex_authenticate: }{provide user authentication data}
+\item{getbalance: }{account balance for a specified currency}
+\item{getblanances: }{account balances for currencies}
+\item{getopenorders: }{order data for all open orders}
+\item{getorderdata: }{order data for a specified order}
+\item{getorderhistory: }{recent order history for an account }
+\item{mytrades: }{detailed recent trading history for a market}
+\item{selllimit: }{place a sell limit order}
 }
 }
 \references{
