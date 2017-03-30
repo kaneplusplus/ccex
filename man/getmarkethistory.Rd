@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getmarkethistory}
 \alias{getmarkethistory}
-\title{Get the Recent History for a Market}
+\title{Recent History for a Market}
 \usage{
 getmarkethistory(market, count = 50)
 }

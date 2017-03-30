@@ -2,9 +2,12 @@
 % Please edit documentation in R/ccex.r
 \name{getbalancedistribution}
 \alias{getbalancedistribution}
-\title{Get the Exchange's Wallet Balance Distribution}
+\title{Exchange's Wallet Balance Distribution}
 \usage{
-getbalancedistribution(currency = "grc")
+getbalancedistribution(currency)
+}
+\arguments{
+\item{currency}{the currency to get the balance distrubtion for.}
 }
 \description{
 The \code{getbalancedistribution} function retrieves the

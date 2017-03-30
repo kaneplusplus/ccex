@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{prices}
 \alias{prices}
-\title{Retrieve All Trading Pairs Data}
+\title{Prices for Markets}
 \usage{
 prices()
 }
@@ -16,7 +16,7 @@ A named list with the following elements:
 }
 }
 \description{
-The \code{prices} function returns all trading pairs data
+The \code{prices} function returns the prices for all markets
 currently available on the C-Cex crypto-currency exchange
 \url{https://c-cex.com}.
 }

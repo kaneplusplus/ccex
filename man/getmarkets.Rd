@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getmarkets}
 \alias{getmarkets}
-\title{Title All Available Trading Markets and Other Meta Data}
+\title{Available Markets and Other Meta Data}
 \usage{
 getmarkets()
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{pairs}
 \alias{pairs}
-\title{The List of Available Trading Pairs}
+\title{Available Trading Pairs}
 \usage{
 pairs()
 }

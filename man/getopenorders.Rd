@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getopenorders}
 \alias{getopenorders}
-\title{Get Data for All Open Orders}
+\title{Order Data for all Open Orders}
 \usage{
 getopenorders(market = NULL)
 }

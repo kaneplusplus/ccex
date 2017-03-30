@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getbalances}
 \alias{getbalances}
-\title{Get the Balances for All Currencies}
+\title{Account Balances for All Currencies}
 \usage{
 getbalances()
 }

@@ -1,9 +1,64 @@
-library(httr)
-library(rjson)
-library(xml2)
-library(openssl)
+#' @title Client for the C-Cex Crypto-currency Exchange
+#' @name ccex-package
+#' @aliases ccex-package ccex
+#' @docType package
+#' @references \url{https://github.com/kaneplusplus/ccex}
+#' \url{https://c-cex.com/}
+#' @description
+#' This software is in no way affiliated, endorsed, or approved by
+#' the C-Cex crypto-currency exchange or any of its affiliates. It comes with
+#' absolutely no warranty and should not be used in actual trading
+#' unless the user can read and understand the source and know what you are
+#' doing.
+#' 
+#' Package 'ccex' is an R implementation of the REST interface used by the C-Cex
+#' crypto-currency exchange \url{https://c-cex.com/}. It provides functions 
+#' for all endpoints currently (as of April 1, 2017) supported by the 
+#' exchange. This includes the ability 
+#' to retrieve price, volume, and orderbook information as well as the ability
+#' to trade crypto-currencies.
+#' 
+#' Calls to the exchange are categorized as either public, which includes 
+#' requests for price, volume, and order book information, and private, which 
+#' includes all requests requiring an account including placing buy or sell 
+#' orders. Public calls can be used directly by installing the package. 
+#' Private calls require creating an account at 
+#' \url{https://c-cex.com/?id=reg} and creating an API and secret key with 
+#' appropriate permissions.
+#' 
+#' Private calls retrieve the API and secret key using the CCEX_API_KEY and 
+#' CCEX_SECRET_KEY environment variables. These may be set by the user before 
+#' opening the R session or, they can be set using the 'ccex_authenticate' 
+#' function.
+#' 
+#' Public Function Calls
+#' \itemize{
+#' \item{coinnames:}{coin names for all currencies}
+#' \item{getballancedistribution:}{exchange's wallet balance distribution}
+#' \item{getmarkethistory:}{recent history for a market}
+#' \item{getmarkets:}{available markets and other meta-data}
+#' \item{getmarketsummaries:}{summary of active markets}
+#' \item{getorderbook:}{order book for a market}
+#' \item{pairs:}{available trading pairs}
+#' \item{prices:}{prices for all markets}
+#' \item{volume:}{volume of trades for a currency}
+#' }
+#' Private Function Calls
+#' \itemize{
+#' \item{buylimit:}{place a buy limit order}
+#' \item{cancel:}{cancel an open order}
+#' \item{ccex_authenticate:}{provide user authentication data}
+#' \item{getbalance:}{account balance for a specified currency}
+#' \item{getblanances:}{account balances for currencies}
+#' \item{getopenorders:}{order data for all open orders}
+#' \item{getorderdata:}{order data for a specified order}
+#' \item{getorderhistory:}{recent order history for an account }
+#' \item{mytrades:}{detailed recent trading history for a market}
+#' \item{selllimit:}{place a sell limit order}
+#' }
+NULL
 
-#' @title The List of Available Trading Pairs
+#' @title Available Trading Pairs
 #' @description The \code{pairs} function returns all currency-pairs 
 #' currently available on the C-Cex crypto-currency exchange
 #' \url{https://c-cex.com}.
@@ -34,8 +89,8 @@ pairs = function() {
     result=as.vector(unlist(content(GET("https://c-cex.com/t/pairs.json")))))
 }
 
-#' @title Retrieve All Trading Pairs Data
-#' @description The \code{prices} function returns all trading pairs data
+#' @title Prices for Markets 
+#' @description The \code{prices} function returns the prices for all markets
 #' currently available on the C-Cex crypto-currency exchange
 #' \url{https://c-cex.com}.
 #' @references \url{https://c-cex.com/?id=api#prices.json}
@@ -61,7 +116,7 @@ prices = function() {
   list(success=TRUE, message="", result=ret)
 }
 
-#' @title Retrieve Full Coin Names for All Currencies
+#' @title Coin Names for Currencies
 #' @description The \code{coinnames} function returns the full coin names
 #' for all available currencies on the C-Cex crypto-currency exchange
 #' \url{https://c-cex.com}.
@@ -87,7 +142,7 @@ coinnames = function() {
     result=data.frame(list(ticker=names(resp), name=as.vector(resp))))
 }
 
-#' @title Retrieve the Volume of Trades for a Currency
+#' @title Volume of Trades for a Currency
 #' @description The \code{volume} functions returns the online volume reported
 #' for last 24 hours for all markets on the C-Cex crypto-currency exchange
 #' (\url{https://c-cex.com}) in which the specified currency is traded.
@@ -116,7 +171,7 @@ volume = function(ticker) {
   list(success=TRUE, message="", result=ti)
 }
 
-#' @title Title All Available Trading Markets and Other Meta Data
+#' @title Available Markets and Other Meta Data
 #' @description The \code{getmarkets} function returns all of the available
 #' markets currently available currently available on the 
 #' C-Cex crypto-currency exchange (\url{https://c-cex.com}) along with
@@ -149,7 +204,7 @@ getmarkets = function() {
   list(success=TRUE, message="", result=result)
 }
 
-#' @title Get the Order Book for a Market
+#' @title Order Book for a Market
 #' @description The \code{getorderbook} function returns the order book 
 #' for a specified market on the C-Cex crypto-currency exchange 
 #' \url{https://c-cex.com}.
@@ -195,7 +250,7 @@ getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
   resp
 }
 
-#' @title Get a Summary of All Active Markets
+#' @title Summary of All Active Markets
 #' @description the \code{getmarketsummaries} retrieves a summary of all
 #' active markets for the last 24 hours on the C-Cex crypto-currency exchange 
 #' \url{https://c-cex.com}.
@@ -233,7 +288,7 @@ getmarketsummaries = function() {
   resp
 }
 
-#' @title Get the Recent History for a Market
+#' @title Recent History for a Market
 #' @description the \code{getmarkethistory} function retrieves recent trade
 #' information for a specified market on the C-Cex crypto-currency exchange 
 #' \url{https://c-cex.com}.
@@ -268,10 +323,11 @@ getmarkethistory = function(market, count=50) {
   resp
 }
 
-#' @title Get the Exchange's Wallet Balance Distribution
+#' @title Exchange's Wallet Balance Distribution
 #' @description The \code{getbalancedistribution} function retrieves the
 #' C-Cex crypto-currency exchange's wallet balance distribution for a specified
 #' currency.
+#' @param currency the currency to get the balance distrubtion for.
 #' @references \url{https://c-cex.com/?id=api#getbalancedistribution}
 #' @examples
 #' \dontrun{
@@ -280,7 +336,7 @@ getmarkethistory = function(market, count=50) {
 #' }
 #' @importFrom httr GET content
 #' @export
-getbalancedistribution = function(currency="grc") {
+getbalancedistribution = function(currency) {
   req = "https://c-cex.com/t/api_pub.html?a=getbalancedistribution&currencyname=CURRENCY"
   req = gsub("CURRENCY", currency, req)
   resp = content(GET(req), type="application/json")
@@ -289,7 +345,7 @@ getbalancedistribution = function(currency="grc") {
   resp
 }
 
-#' @importFrom httr GET content
+#' @importFrom httr GET content add_headers
 #' @importFrom openssl sha512
 priv_req = function(req) {
   str_time = as.character(as.integer(Sys.time()))
@@ -379,7 +435,7 @@ selllimit = function(market, quantity, rate) {
   priv_req(req)
 }
 
-#' @title Authenticate Your Account on the C-Cex Exchange
+#' @title Provide User Authentication Data
 #' @description The \code{ccex_authenicate} function sets the 
 #' CCEX_API_KEY and CCEX_SECRET_KEY environment variables in your current
 #' session to access your account information on the C-Cex crypto-currency
@@ -424,7 +480,7 @@ cancel = function(uuid) {
   ret
 }
 
-#' Get the Balance a Specified Currency
+#' Account Balance for a Specified Currency
 #' @description The \code{getbalance} function retrieves the account balance
 #' for a specified currency on the C-Cex crypto-currency 
 #' exchange \url{https://c-cex.com}. This function
@@ -459,7 +515,7 @@ getbalance = function(currency="btc") {
   resp
 }
 
-#' Get the Balances for All Currencies
+#' Account Balances for All Currencies
 #' @description The \code{getbalances} function retrieves the account balance
 #' for all currencies on the C-Cex crypto-currency 
 #' exchange \url{https://c-cex.com}. This function
@@ -492,7 +548,7 @@ getbalances = function() {
   resp
 }
 
-#' @title Get Order Data
+#' @title Order Data for a Specified Order
 #' @description The \code{getorder} function retrieves open order data 
 #' on the C-Cex crypto-currency 
 #' exchange \url{https://c-cex.com}. This function
@@ -537,7 +593,7 @@ getorder = function(uuid) {
   resp
 }
 
-#' @title Get Data for All Open Orders
+#' @title Order Data for all Open Orders
 #' @description The \code{getopenorders} function retrieves all open orders
 #' on the C-Cex crypto-currency 
 #' exchange \url{https://c-cex.com}. This function
@@ -584,7 +640,7 @@ getopenorders = function(market=NULL) {
   resp
 }
 
-#' @title Get Order History
+#' @title Recent Order History for an Account
 #' @description The \code{getorderhistory} function retrieves order history
 #' data on the C-Cex crypto-currency exchange \url{https://c-cex.com}. This 
 #' function can be used after you provide information for authentication.
@@ -634,7 +690,7 @@ getorderhistory = function(market=NULL, count=NULL) {
   resp
 }
 
-#' @title Get a Detailed Trading History for a Market
+#' @title Detailed Trading History for a Market
 #' @description The \code{mytrades} function retrieves a detailed
 #' trading history for a specified market on the C-Cex crypto-currency 
 #' exchange \url{https://c-cex.com}. This function

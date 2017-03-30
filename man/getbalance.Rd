@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getbalance}
 \alias{getbalance}
-\title{Get the Balance a Specified Currency}
+\title{Account Balance for a Specified Currency}
 \usage{
 getbalance(currency = "btc")
 }

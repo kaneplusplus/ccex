@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getorderbook}
 \alias{getorderbook}
-\title{Get the Order Book for a Market}
+\title{Order Book for a Market}
 \usage{
 getorderbook(market, type = c("both", "buy", "sell"), depth = 50)
 }

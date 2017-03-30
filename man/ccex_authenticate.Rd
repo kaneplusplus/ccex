@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{ccex_authenticate}
 \alias{ccex_authenticate}
-\title{Authenticate Your Account on the C-Cex Exchange}
+\title{Provide User Authentication Data}
 \usage{
 ccex_authenticate(api_key, secret_key)
 }

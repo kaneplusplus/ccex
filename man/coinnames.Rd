@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{coinnames}
 \alias{coinnames}
-\title{Retrieve Full Coin Names for All Currencies}
+\title{Coin Names for Currencies}
 \usage{
 coinnames()
 }

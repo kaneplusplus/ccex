@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{volume}
 \alias{volume}
-\title{Retrieve the Volume of Trades for a Currency}
+\title{Volume of Trades for a Currency}
 \usage{
 volume(ticker)
 }

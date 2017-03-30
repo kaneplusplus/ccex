@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getorder}
 \alias{getorder}
-\title{Get Order Data}
+\title{Order Data for a Specified Order}
 \usage{
 getorder(uuid)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ccex.r
 \name{getmarketsummaries}
 \alias{getmarketsummaries}
-\title{Get a Summary of All Active Markets}
+\title{Summary of All Active Markets}
 \usage{
 getmarketsummaries()
 }

@@ -1,10 +1,11 @@
 Package: ccex
 Type: Package
-Title: Client for the C-Cex Cryptocurrency Exchange
+Title: Client for the C-Cex Crypto-currency Exchange
 Version: 0.1.0
 Date: 2017-03-24
 Author: Michael Kane
 Maintainer: Michael Kane <kaneplusplus@gmail.com>
 Description: A client for the C-Cex crypo-currency exchange \url{https://c-cex.com} including the ability to query trade data, manage account balances, and place orders.
+Imports: httr, openssl, stringr
 License: LGPL-2
 RoxygenNote: 6.0.1
