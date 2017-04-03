@@ -12,7 +12,7 @@ test_that('The "buylimit" function works.', {
   resp = buylimit("btc-usd", 100, 1)
   expect_false(resp$success)
   expect_equal(resp$message, 'ACCESS_DENIED')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "cancel" function works.', {
@@ -20,7 +20,7 @@ test_that('The "cancel" function works.', {
   resp = cancel("1234")
   expect_false(resp$success)
   expect_equal(resp$message, 'ACCESS_DENIED')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "getbalance" function works.', {
@@ -28,7 +28,7 @@ test_that('The "getbalance" function works.', {
   resp = getbalance("btc")
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "getbalances" function works.', {
@@ -36,14 +36,14 @@ test_that('The "getbalances" function works.', {
   resp = getbalances()
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "getopenorders" function works.', {
   ccex_authenticate(api_key, secret_key)
   resp = getopenorders()
   expect_true(resp$success)
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "getorder" function works.', {
@@ -51,21 +51,21 @@ test_that('The "getorder" function works.', {
   resp = getorder("1234")
   expect_false(resp$success)
   expect_equal(resp$message, 'UUID_INVALID')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "getorderhistory" function works.', {
   ccex_authenticate(api_key, secret_key)
   resp = getorderhistory()
   expect_true(resp$success)
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "mytrades" function works.', {
   ccex_authenticate(api_key, secret_key)
   resp = mytrades("usd-btc")
   expect_true(resp$success)
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
 test_that('The "sellimit" function works.', {
@@ -73,6 +73,6 @@ test_that('The "sellimit" function works.', {
   resp = selllimit("usd-btc", 100, 1)
   expect_false(resp$success)
   expect_equal(resp$message, 'ACCESS_DENIED')
-  Sys.sleep(1)
+  Sys.sleep(2)
 })
 
