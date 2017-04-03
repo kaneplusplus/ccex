@@ -5,7 +5,7 @@ test_that('the "coinnames" function works.', {
   expect_true(resp$success)
   expect_is(resp$result, 'data.frame')
   Sys.sleep(1)
-}
+})
 
 test_that('The "getbalancedistribution" function works.', {
   resp = getbalancedistribution("trump")
