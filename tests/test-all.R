@@ -1,4 +1,4 @@
-library(testthat)
-library(ccex)
+library('testthat')
+library('ccex')
 
-test_check("ccex")
+test_check('ccex')
