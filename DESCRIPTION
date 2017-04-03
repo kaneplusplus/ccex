@@ -9,3 +9,4 @@ Description: A client for the C-Cex crypo-currency exchange \url{https://c-cex.c
 Imports: httr, openssl, stringr
 License: LGPL-2
 RoxygenNote: 6.0.1
+Suggests: covr

@@ -7,3 +7,4 @@
 ^CONDUCT\.md$
 ^cran-comments\.md$
 ^appveyor\.yml$
+^codecov\.yml$
