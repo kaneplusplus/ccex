@@ -629,7 +629,7 @@ getorder = function(uuid) {
 getopenorders = function(market=NULL) {
   req = "https://c-cex.com/t/api.html?a=getopenorders"
   if (!is.null(market)) req = paste0(req, "&market=", market)
-  req = paste0(req, "&apikey=", options()$ccex_api_key)
+  req = paste0(req, "&apikey=", Sys.getenv("CCEX_API_KEY"))
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
@@ -678,7 +678,7 @@ getorderhistory = function(market=NULL, count=NULL) {
   req = "https://c-cex.com/t/api.html?a=getorderhistory"
   if (!is.null(market)) req = paste0(req, "&market=", market)
   if (!is.null(count)) req = paste0(req, "&count=", count)
-  req = paste0(req, "&apikey=", options()$ccex_api_key)
+  req = paste0(req, "&apikey=", Sys.getenv("CCEX_API_KEY"))
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
