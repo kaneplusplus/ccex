@@ -12,6 +12,7 @@ ccex: An R client for the [C-Cex Crypto-currency Exchange](https://c-cex.com)
 **License:** [LGPL](https://opensource.org/licenses/LGPL-2.1)
 
 [![Build Status](https://travis-ci.org/kaneplusplus/ccex.svg?branch=master)](https://travis-ci.org/kaneplusplus/ccex)
+[![Coverage Status](https://coveralls.io/repos/github/kaneplusplus/ccex/badge.svg?branch=master)](https://coveralls.io/github/kaneplusplus/ccex?branch=master)
 
 Disclaimer
 ===
