@@ -13,7 +13,7 @@ ccex: An R client for the [C-Cex Crypto-currency Exchange](https://c-cex.com)
 
 [![Build Status](https://travis-ci.org/kaneplusplus/ccex.svg?branch=master)](https://travis-ci.org/kaneplusplus/ccex)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kaneplusplus/ccex?branch=master&svg=true)](https://ci.appveyor.com/project/kaneplusplus/ccex)
-[![Coverage Status](https://coveralls.io/repos/github/kaneplusplus/ccex/badge.svg?branch=master)](https://coveralls.io/github/kaneplusplus/ccex?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/kaneplusplus/ccex/master.svg)](https://codecov.io/github/kaneplusplus/ccex?branch=master)
 
 Disclaimer
 ===
