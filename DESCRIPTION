@@ -11,4 +11,4 @@ VignetteBuildr: knitr
 Imports: httr, openssl, stringr
 License: LGPL-2
 RoxygenNote: 6.0.1
-Suggests: covr
+Suggests: covr, testthat
