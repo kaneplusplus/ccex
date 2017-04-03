@@ -732,6 +732,7 @@ mytrades = function(market, limit=3) {
     ret = Reduce(rbind, Map(as_data_frame, resp$return))
     ret$datetime = strptime(ret$datetime, "%Y-%m-%d %H:%M:%S", tz="GMT")
   }
+  resp$return = NULL
   resp$result = ret
   resp
 }
