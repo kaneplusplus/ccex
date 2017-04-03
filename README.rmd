@@ -76,7 +76,7 @@ library(scales)
 library(ggplot2)
 
 # The price of doge coins in bitcoins.
-doge_btc = ccex::getmarkethistory(market='doge-btc', count=100)$result
+doge_btc = :getmarkethistory(market='doge-btc', count=100)$result
 
 # ggplot2 handle POSIXct types only.
 doge_btc$time_stamp = as.POSIXct(doge_btc$time_stamp)
