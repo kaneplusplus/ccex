@@ -56,7 +56,7 @@ Install
 The package is available from GitHub and will be uploaded to CRAN
 shortly. If you wish to install the development version then install the 
 [devtools package](https://CRAN.R-project.org/package=devtools), available 
-from CRAN. A 
+from CRAN. 
 
 ```{r}
 #install.packages("devtools")
