@@ -3,6 +3,11 @@
 ccex: An R client for the [C-Cex Crypto-currency Exchange](https://c-cex.com)
 =============================================================================
 
+**Authors:** Michael J. Kane<br/>
+**License:** [LGPL](https://opensource.org/licenses/LGPL-2.1)
+[![Build Status](https://travis-ci.org/kaneplusplus/ccex.svg?branch=master)](https://travis-ci.org/kaneplusplus/ccex)
+
+
 Disclaimer
 ==========
 
