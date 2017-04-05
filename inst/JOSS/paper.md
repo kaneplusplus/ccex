@@ -17,9 +17,9 @@ bibliography: paper.bib
 
 # Summary
 
-Package ```ccex``` [@ccex] is an R [@R] client for the REST server used by the
+Package ```ccex``` [@ccex] is a RESTful R [@R] client for the
 C-Cex crypto-currency exchange [@ccex_site]. The package provides 
-functions for all endpoints supported by the exchange and includes the
+functions for all endpoints supported by the exchange including the
 ability to retrieve price, volume, and order book information as well as
 the ability to trade crypto-currencies.
 

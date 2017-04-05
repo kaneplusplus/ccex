@@ -325,7 +325,8 @@ getmarkethistory = function(market, count=50) {
   sc_names = str_replace_all(names(resp$result), "[A-Z]", 
     function(x) paste0("_", tolower(x)))
   names(resp$result) = str_sub(sc_names, 2)
-  resp$time_stamp = strptime(resp$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
+  resp$result$time_stamp = 
+    strptime(resp$result$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   resp
 }
 

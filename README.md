@@ -18,8 +18,6 @@ This software is in no way affiliated, endorsed, or approved by the
 It comes with absolutely no warranty and should not be used in actual trading 
 unless the user can read and understand the source and know what you are doing.
 
-This software is Licenced under the LGPL version 2.
-
 Overview
 ========
 
