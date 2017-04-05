@@ -2,13 +2,13 @@ Package: ccex
 Type: Package
 Title: Client for the C-Cex Crypto-currency Exchange
 Version: 0.1.0
-Date: 2017-03-24
+Date: 2017-04-05
 Authors@R: c(person("Michael", "kane", role = c("aut", "cph", "cre"), email = "kaneplusplus@gmail.com"))
 URL: https://github.com/kaneplusplus/ccex
 BugReports: https://github.com/kaneplusplus/ccex/issues
 Description: A client for the C-Cex crypo-currency exchange \url{https://c-cex.com} including the ability to query trade data, manage account balances, and place orders.
-VignetteBuildr: knitr
-Imports: httr, openssl, stringr
 License: LGPL-2
+Imports: httr, openssl, stringr
+Suggests: covr, testthat, knitr, rmarkdown, threejs, tidyverse, igraph, quantmod
+VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Suggests: covr, testthat
