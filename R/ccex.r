@@ -62,6 +62,10 @@ as_data_frame = function(x) {
   as.data.frame(x, stringsAsFactors=FALSE)
 }
 
+camel_to_snake = function(x) {
+  gsub("^_+", "", tolower(gsub("([A-Z])", "_\\1", x)))
+}
+
 #' @title Available Trading Pairs
 #' @description The \code{pairs} function returns all currency-pairs 
 #' currently available on the C-Cex crypto-currency exchange
@@ -196,15 +200,12 @@ volume = function(ticker) {
 #' head(markets)
 #' }
 #' @importFrom httr GET content
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getmarkets = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarkets"), 
     type="application/json")
   result = Reduce(rbind, Map(as_data_frame, resp$result))
-  sc_names = str_replace_all(names(result), "[A-Z]", 
-    function(x) paste0("_", tolower(x)))
-  names(result) = str_sub(sc_names, 2)
+  names(result) = camel_to_snake(names(result))
   list(success=TRUE, message="", result=result)
 }
 
@@ -274,7 +275,6 @@ getorderbook = function(market, type=c("both", "buy", "sell"), depth=50) {
 #' head(ms)
 #' }
 #' @importFrom httr GET content
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getmarketsummaries = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarketsummaries"),
@@ -286,9 +286,7 @@ getmarketsummaries = function() {
         result[[i]][[j]] = NA
   }
   resp$result = Reduce(rbind, Map(as_data_frame, result))
-  sc_names = str_replace_all(names(resp$result), "[A-Z]", 
-    function(x) paste0("_", tolower(x)))
-  names(resp$result) = str_sub(sc_names, 2)
+  names(resp$result) = camel_to_snake(names(resp$result))
   resp$time_stamp = strptime(resp$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   resp
 }
@@ -315,16 +313,13 @@ getmarketsummaries = function() {
 #' head(mh)
 #' }
 #' @importFrom httr GET content
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getmarkethistory = function(market, count=50) {
   req="https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=MARKET&count=COUNT"
   req = gsub("MARKET", market, gsub("COUNT", count, req))
   resp = content(GET(req), type="application/json")
   resp$result = Reduce(rbind, Map(as_data_frame, resp$result))
-  sc_names = str_replace_all(names(resp$result), "[A-Z]", 
-    function(x) paste0("_", tolower(x)))
-  names(resp$result) = str_sub(sc_names, 2)
+  names(resp$result) = camel_to_snake(names(resp$result))
   resp$result$time_stamp = 
     strptime(resp$result$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   resp
@@ -577,7 +572,6 @@ getbalances = function() {
 #' \dontrun{
 #' getorder(uuid)
 #' }
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getorder = function(uuid) {
   req = "https://c-cex.com/t/api.html?a=getorder&apikey=APIKEY&uuid=UUID"
@@ -592,9 +586,7 @@ getorder = function(uuid) {
       }
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    sc_names = str_replace_all(names(ret), "[A-Z]", 
-      function(x) paste0("_", tolower(x)))
-    names(ret) = str_sub(sc_names, 2)
+    names(ret) = camel_to_snake(names(ret))
   }
   resp$result = ret
   resp
@@ -625,7 +617,6 @@ getorder = function(uuid) {
 #' \dontrun{
 #' getopenorders("btc-usd")
 #' }
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getopenorders = function(market=NULL) {
   req = "https://c-cex.com/t/api.html?a=getopenorders"
@@ -640,9 +631,7 @@ getopenorders = function(market=NULL) {
       }
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    sc_names = str_replace_all(names(ret), "[A-Z]", 
-      function(x) paste0("_", tolower(x)))
-    names(ret) = str_sub(sc_names, 2)
+    names(ret) = camel_to_snake(names(ret))
   }
   resp
 }
@@ -673,7 +662,6 @@ getopenorders = function(market=NULL) {
 #' \dontrun{
 #' getorderhistory()
 #' }
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 getorderhistory = function(market=NULL, count=NULL) {
   req = "https://c-cex.com/t/api.html?a=getorderhistory"
@@ -689,9 +677,7 @@ getorderhistory = function(market=NULL, count=NULL) {
       }
     }
     ret = Reduce(rbind, Map(as_data_frame, resp$result))
-    sc_names = str_replace_all(names(ret), "[A-Z]", 
-      function(x) paste0("_", tolower(x)))
-    names(ret) = str_sub(sc_names, 2)
+    names(ret) = camel_to_snake(names(ret))
     ret$time_stamp = strptime(ret$time_stamp, "%Y-%m-%d %H:%M:%S", tz="GMT")
   }
   resp$result = ret
@@ -720,7 +706,6 @@ getorderhistory = function(market=NULL, count=NULL) {
 #' \dontrun{
 #' mytrades("btc-usd")
 #' }
-#' @importFrom stringr str_replace_all str_sub
 #' @export
 mytrades = function(market, limit=3) {
   req = "https://c-cex.com/t/api.html?a=mytrades&apikey=APIKEY&marketid=MARKET&limit=LIMIT"
