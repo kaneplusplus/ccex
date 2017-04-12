@@ -2,7 +2,6 @@ Package: ccex
 Type: Package
 Title: Client for the C-Cex Crypto-currency Exchange
 Version: 0.1.0
-Date: 2017-04-05
 Authors@R: c(person("Michael", "kane", role = c("aut", "cph", "cre"), email = "kaneplusplus@gmail.com"))
 URL: https://github.com/kaneplusplus/ccex
 BugReports: https://github.com/kaneplusplus/ccex/issues
