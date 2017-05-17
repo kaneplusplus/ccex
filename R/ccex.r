@@ -49,7 +49,7 @@
 #' \item{cancel: }{cancel an open order}
 #' \item{ccex_authenticate: }{provide user authentication data}
 #' \item{getbalance: }{account balance for a specified currency}
-#' \item{getblanances: }{account balances for currencies}
+#' \item{getbalances: }{account balances for currencies}
 #' \item{getopenorders: }{order data for all open orders}
 #' \item{getorderdata: }{order data for a specified order}
 #' \item{getorderhistory: }{recent order history for an account }
