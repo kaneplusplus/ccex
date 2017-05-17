@@ -1,9 +1,9 @@
-#' @title Client for the C-Cex Crypto-currency Exchange
+#' @title Client for the C-Cex Crypto-Currency Exchange
 #' @name ccex-package
 #' @aliases ccex-package ccex
 #' @docType package
-#' @references \url{https://github.com/kaneplusplus/ccex}
-#' \url{https://c-cex.com/}
+#' @references \url{https://c-cex.com/}
+#' \url{https://github.com/kaneplusplus/ccex}
 #' @description
 #' This software is in no way affiliated, endorsed, or approved by
 #' the C-Cex crypto-currency exchange or any of its affiliates. It comes with
