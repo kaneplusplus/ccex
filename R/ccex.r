@@ -468,8 +468,6 @@ ccex_authenticate = function(api_key, secret_key) {
 #'                   successful, otherwise and empty string."}
 #'  \item{result:  }{always NULL}
 #' }
-#' \code{\link{getopenorders}} \code{\link{getorderhistory}} 
-#' \code{\link{buylimit}} \code{\link{selllimit}}
 #' @examples
 #' \dontrun{
 #' cancel(uuid) 

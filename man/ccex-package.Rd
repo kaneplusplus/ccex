@@ -4,7 +4,7 @@
 \name{ccex-package}
 \alias{ccex-package}
 \alias{ccex}
-\title{Client for the C-Cex Crypto-currency Exchange}
+\title{Client for the C-Cex Crypto-Currency Exchange}
 \description{
 This software is in no way affiliated, endorsed, or approved by
 the C-Cex crypto-currency exchange or any of its affiliates. It comes with
@@ -14,7 +14,7 @@ doing.
 
 Package 'ccex' is an R implementation of the REST interface used by the C-Cex
 crypto-currency exchange \url{https://c-cex.com/}. It provides functions 
-for all endpoints currently (as of April 1, 2017) supported by the 
+for all endpoints currently (as of May 16, 2017) supported by the 
 exchange. This includes the ability 
 to retrieve price, volume, and orderbook information as well as the ability
 to trade crypto-currencies.
@@ -50,7 +50,7 @@ Private Function Calls
 \item{cancel: }{cancel an open order}
 \item{ccex_authenticate: }{provide user authentication data}
 \item{getbalance: }{account balance for a specified currency}
-\item{getblanances: }{account balances for currencies}
+\item{getbalances: }{account balances for currencies}
 \item{getopenorders: }{order data for all open orders}
 \item{getorderdata: }{order data for a specified order}
 \item{getorderhistory: }{recent order history for an account }
@@ -59,6 +59,6 @@ Private Function Calls
 }
 }
 \references{
-\url{https://github.com/kaneplusplus/ccex}
 \url{https://c-cex.com/}
+\url{https://github.com/kaneplusplus/ccex}
 }

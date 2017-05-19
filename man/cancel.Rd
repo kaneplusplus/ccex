@@ -17,8 +17,6 @@ A named list with the following elements:
                   successful, otherwise and empty string."}
  \item{result:  }{always NULL}
 }
-\code{\link{getopenorders}} \code{\link{getorderhistory}} 
-\code{\link{buylimit}} \code{\link{selllimit}}
 }
 \description{
 The \code{cancel} function cancels an open order on the
