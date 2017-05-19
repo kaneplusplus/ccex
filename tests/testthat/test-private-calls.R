@@ -1,7 +1,7 @@
 context("C-Cex Private Calls")
 
 # A test account has been created to see if the private calls work.
-# The key does not allow you to create orders, and you can'T withdraw.
+# The key does not allow you to create orders, and you can't withdraw.
 # You may deposit :-)
 
 api_key = "35A4395A6CAC941352D6CA8FD2BF6BFB"
