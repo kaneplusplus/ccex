@@ -280,8 +280,8 @@ getmarketsummaries = function() {
   resp = content(GET("https://c-cex.com/t/api_pub.html?a=getmarketsummaries"),
     type="application/json")
   result = resp$result
-  for(i in 1:length(result)) {
-    for (j in 1:length(result[[i]]))
+  for(i in seq_along(result)) {
+    for (j in seq_along(result[[i]]))
       if (is.null(result[[i]][[j]]))
         result[[i]][[j]] = NA
   }
@@ -578,8 +578,8 @@ getorder = function(uuid) {
   resp = priv_req(req)
   ret = NULL
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
@@ -623,8 +623,8 @@ getopenorders = function(market=NULL) {
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
@@ -669,8 +669,8 @@ getorderhistory = function(market=NULL, count=NULL) {
   resp = priv_req(req)
   ret = list()
   if (length(resp$result) > 0) {
-    for(i in 1:length(resp$result)) {
-      for (j in 1:length(resp$result[[i]])) {
+    for(i in seq_along(resp$result)) {
+      for (j in seq_along(resp$result[[i]])) {
         if (is.null(resp$result[[i]][[j]])) resp$result[[i]][[j]] = NA
       }
     }
